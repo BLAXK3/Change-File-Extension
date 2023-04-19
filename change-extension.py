@@ -74,7 +74,8 @@ def main() -> None:
                 wb.get("android").open_new_tab(url)
             elif ops == "iOS":
                 wb.get("safari").open_new_tab(url)
-            break
+            else:
+                break
 
         elif choice[0:5] == "-help":
             print("\033[33m-ets for check the extension file\033[0m")
