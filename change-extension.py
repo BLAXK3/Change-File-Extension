@@ -18,10 +18,13 @@ def main() -> None:
     while True:
         choice = input(">>> ")
         if choice[0:4] == "-ets":
-            path = input("Enter file or folder path>>> ")
+            path = input("Enter file or folder path >>> ")
             if os.path.isfile(path) and os.path.exists(path):
                 extension = os.path.splitext(path)[1]
-                print(f"{path}\033[96m is > {extension}\033[0m")
+                if extension:
+                    print(f"{path}\033[96m is > {extension}\033[0m")
+                else :
+                    print(f"{paths}\033[31m > has no extension\033[0m")
             elif os.path.isdir(path) and os.path.exists(path):      
                 file_ets = os.listdir(path)
                 for ets in file_ets:
@@ -35,15 +38,21 @@ def main() -> None:
                 print("\033[31mFolder or file not found\033[0m")
         elif choice[0:3] == "-ch":
             try:
-                path = input("Enter file or folder path>>> ")
+                path = input("Enter file or folder path >>> ")
                 if os.path.isfile(path) and os.path.exists(path):
                     old_ets = os.path.splitext(path)[1]
                     new_ets = input("Enter the new file extension >>> ")
+                    if "." in new_ets:
+                        new_ets = new_ets[1:]
                     change_extension(path, new_ets)
                     print(f"\033[32mFile extension changed from {old_ets} to {new_ets}.\033[0m")
                 elif os.path.isdir(path) and os.path.exists(path):
+                    print("If there is no file extension, press Enter.")
                     old_ets = input("Enter the old file extension >>> ")
                     new_ets = input("Enter the new file extension >>> ")
+                    if "." in old_ets and "." in new_ets:
+                        old_ets = old_ets[1:]
+                        new_ets = new_ets[1:]
                     change_extensions_folder(path, old_ets, new_ets)
                     print(f"\033[32mAll files with extension {old_ets} in {path} have been changed to {new_ets}\033[0m")
                 else:
