@@ -18,43 +18,38 @@ def main() -> None:
     while True:
         choice = input(">>> ")
         if choice[0:4] == "-ets":
-            if os.path.isfile(choice[5:]) or os.path.isdir(choice[5:]) :
-                path = choice[5:]
+            path = input("Enter file or folder path>>> ")
+            if os.path.isfile(path) and os.path.exists(path):
+                extension = os.path.splitext(path)[1]
+                print(f"{path}\033[96m is > {extension}\033[0m")
+            elif os.path.isdir(path) and os.path.exists(path):      
+                file_ets = os.listdir(path)
+                for ets in file_ets:
+                    paths = path + "\\" + ets
+                    extension = os.path.splitext(ets)[1]
+                    if extension:
+                        print(f"{paths}\033[96m is > {extension}\033[0m")
+                    else :
+                        print(f"{paths}\033[31m > has no extension\033[0m")
+            else:
+                print("\033[31mFolder or file not found\033[0m")
+        elif choice[0:3] == "-ch":
+            try:
+                path = input("Enter file or folder path>>> ")
                 if os.path.isfile(path) and os.path.exists(path):
-                    extension = os.path.splitext(path)[1]
-                    print(f"{path}\033[96m is > {extension}\033[0m")
-                elif os.path.isdir(path) and os.path.exists(path):      
-                    file_ets = os.listdir(path)
-                    for ets in file_ets:
-                        extension = os.path.splitext(ets)[1]
-                        if extension:
-                            print(f"{ets}\033[96m is > {extension}\033[0m")
-                        else :
-                            print(f"{ets}\033[31m > has no extension\033[0m")
+                    old_ets = os.path.splitext(path)[1]
+                    new_ets = input("Enter the new file extension >>> ")
+                    change_extension(path, new_ets)
+                    print(f"\033[32mFile extension changed from {old_ets} to {new_ets}.\033[0m")
+                elif os.path.isdir(path) and os.path.exists(path):
+                    old_ets = input("Enter the old file extension >>> ")
+                    new_ets = input("Enter the new file extension >>> ")
+                    change_extensions_folder(path, old_ets, new_ets)
+                    print(f"\033[32mAll files with extension {old_ets} in {path} have been changed to {new_ets}\033[0m")
                 else:
                     print("\033[31mFolder or file not found\033[0m")
-            else :
-                print("\033[31m-help for commands detials\033[0m")
-        elif choice[0:3] == "-ch":
-            if os.path.isfile(choice[4:]) or os.path.isdir(choice[4:]) :
-                path = choice[4:]
-                try:
-                    if os.path.isfile(path) and os.path.exists(path):
-                        old_ets = os.path.splitext(path)[1]
-                        new_ets = input("Enter the new file extension >>> ")
-                        change_extension(path, new_ets)
-                        print(f"\033[32mFile extension changed from {old_ets} to {new_ets}.\033[0m")
-                    elif os.path.isdir(path) and os.path.exists(path):
-                        old_ets = input("Enter the old file extension >>> ")
-                        new_ets = input("Enter the new file extension >>> ")
-                        change_extensions_folder(path, old_ets, new_ets)
-                        print(f"\033[32mAll files with extension {old_ets} in {path} have been changed to {new_ets}\033[0m")
-                    else:
-                        print("\033[31mFolder or file not found\033[0m")
-                except FileNotFoundError:
-                    print("\033[31mFolder or File not found.\033[0m")
-            else :
-                print("\033[31m-help for commands detials\033[0m")
+            except FileNotFoundError:
+                print("\033[31mFolder or File not found.\033[0m")
         elif choice[0:4] == "-ext":
             print("\033[33mThank for using program\033[0m")
             print("\033[33mIf you like it, please give stars to my repo, thanks :>\033[0m")
@@ -75,12 +70,7 @@ def main() -> None:
         elif choice[0:5] == "-help":
             print("\033[33m-ets for check the extension file\033[0m")
             print("\033[33m-ch for change the extension file\033[0m")
-            print("\033[33m-exp for commands example\033[0m")
             print("\033[33m-ext for exit the program\033[0m")
-        elif choice[0:4] == "-exp":
-            print("\033[33m-ets <file or folder path>\033[0m")
-            print("\033[33m-ch <file path> -n <new extension>\033[0m")
-            print("\033[33m-ch <folder path> -o <old extension> -n <new extension>\033[0m")
         else:
             print("\033[31m-help for commands detials\033[0m")
 
