@@ -65,7 +65,7 @@ def main() -> None:
             ops = pf.system()
             url = "https://github.com/Nutsuki3/Change-File-Extension"
             if ops == "Windows":
-                wb.open_new_tab(url, new=2)
+                wb.open_new_tab(url)
             elif ops == "Linux":
                 wb.get("xdg-open").open_new_tab(url)
             elif ops == "Darwin":
